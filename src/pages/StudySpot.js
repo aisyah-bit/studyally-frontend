@@ -16,12 +16,15 @@ import L from "leaflet";
 import "leaflet.heat";
 
 export default function StudySpot() {
-  const [position, setPosition] = useState(null); // will fallback after 4s
+  const [position, setPosition] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [heatData, setHeatData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [routeTo, setRouteTo] = useState(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => setIsClient(true), []);
 
   const searchLocation = async (query) => {
     try {
@@ -29,7 +32,7 @@ export default function StudySpot() {
         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`,
         {
           headers: {
-            "User-Agent": "studyspot-app/1.0 (your-email@example.com)",
+            "User-Agent": "studyspot-app/1.0 (your@email.com)",
             "Accept-Language": "en"
           }
         }
@@ -38,7 +41,6 @@ export default function StudySpot() {
       setSuggestions(data);
     } catch (err) {
       console.error("Search error:", err);
-      alert("Failed to fetch location suggestions.");
     }
   };
 
@@ -54,8 +56,6 @@ export default function StudySpot() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude, accuracy } = pos.coords;
-        console.log("📍 Manual location fetch:", latitude, longitude, "accuracy:", accuracy);
-
         if (accuracy < 1000) {
           setPosition([latitude, longitude]);
           fetchNearbyPlaces(latitude, longitude);
@@ -64,8 +64,8 @@ export default function StudySpot() {
         }
       },
       (err) => {
-        console.error("❌ Geolocation error:", err);
-        alert(`Geolocation error: ${err.message}`);
+        console.error("Geolocation error:", err);
+        alert("Location access denied or failed.");
       },
       {
         enableHighAccuracy: true,
@@ -146,7 +146,7 @@ export default function StudySpot() {
       <div style={{ padding: "1rem" }}>
         <input
           type="text"
-          placeholder="Search a location (e.g. UiTM Shah Alam)"
+          placeholder="Search a location"
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -172,7 +172,7 @@ export default function StudySpot() {
         )}
       </div>
 
-      {position && (
+      {isClient && position && (
         <MapContainer
           center={position}
           zoom={15}
@@ -211,7 +211,7 @@ function MapUpdater({ center }) {
   useEffect(() => {
     map.setView(center);
     setTimeout(() => {
-      map.invalidateSize(); // 🛠️ Force redraw
+      map.invalidateSize();
     }, 300);
   }, [map, center]);
   return null;
