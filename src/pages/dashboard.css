@@ -1,0 +1,245 @@
+/* General Layout */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f8fc;
+}
+
+/* Top Bar */
+.top-bar {
+  height: 70px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.left-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.product-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #6c5dd3;
+}
+
+.right-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.greeting {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Profile Dropdown */
+.profile-pic {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6c5dd3;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  width: 160px;
+  opacity: 0;
+  transform: scale(0.95);
+  transform-origin: top right;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.dropdown-content.open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, padding-left 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f3f0ff;
+  padding-left: 20px;
+  color: #6c5dd3;
+}
+
+/* Layout Body */
+.body-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 230px;
+  background-color: #ffffff;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.03);
+  padding: 30px 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 30px;
+  min-height: 100%;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  margin-bottom: 16px;
+}
+
+.nav-list li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.nav-list li a:hover,
+.nav-list li a.active {
+  background-color: #f0efff;
+  color: #6c5dd3;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+/* Charts Section - Improved Grid Layout */
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Individual Chart Card */
+.chart-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-2px);
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6c5dd3;
+  margin-bottom: 1rem;
+}
+
+/* Tab Navigation */
+.tab-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tab-buttons button {
+  padding: 10px 16px;
+  border: none;
+  background-color: #eae8fd;
+  color: #333;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.tab-buttons button:hover {
+  background-color: #d8d5fc;
+  color: #000;
+}
+
+.tab-buttons .active-tab {
+  background-color: #6c5dd3;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(108, 93, 211, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 24px;
+  }
+
+  .charts-section {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .chart-card {
+    height: auto;
+  }
+}

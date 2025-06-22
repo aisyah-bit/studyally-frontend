@@ -1,0 +1,153 @@
+/* src/styles/landing.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f7fafc;
+  color: #333;
+}
+
+.landing-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.landing-header {
+  background-color: #1a202c;
+  padding: 1rem 0;
+  color: white;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.landing-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.landing-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.landing-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.landing-nav a:hover {
+  color: #63b3ed;
+}
+
+.login-btn {
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: white;
+  color: #1a202c;
+}
+
+.hero-section {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: white;
+  padding: 6rem 1rem;
+  text-align: center;
+}
+
+.hero-section h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.get-started-btn {
+  background-color: #ffffff;
+  color: #4c51bf;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.get-started-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.features-section {
+  background-color: #edf2f7;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.features-section h3 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature-box {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.feature-box h4 {
+  font-size: 1.5rem;
+  color: #4c51bf;
+  margin-bottom: 0.5rem;
+}
+
+.feature-box p {
+  color: #555;
+}
+
+@media (min-width: 768px) {
+  .features {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.landing-footer {
+  background-color: #1a202c;
+  color: white;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  margin-top: auto;
+}

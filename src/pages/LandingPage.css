@@ -1,0 +1,110 @@
+/* General Layout */
+.landing-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #0d0c2b, #1c1b45);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+.landing-container {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  padding: 60px;
+  border: 2px solid #a78bfa;
+  border-radius: 20px;
+  background-color: #0e0d2d;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Dots Background Effect */
+.dots-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.07;
+  background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 0;
+}
+
+/* Flex Content Layout */
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* Left Section */
+.left {
+  flex: 2;
+}
+
+.left h1 {
+  font-size: 1.8rem;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: #a78bfa;
+  font-weight: bold;
+}
+
+.quote {
+  font-style: italic;
+  color: #cccccc;
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+/* Right Section */
+.right {
+  flex: 1;
+  text-align: center;
+}
+
+.right h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: white;
+}
+
+.right h2 span {
+  color: white;
+}
+
+/* Button Styling */
+.get-started-btn {
+  margin-top: 30px;
+  background: linear-gradient(to right, #7c3aed, #9333ea);
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+.get-started-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #9333ea, #7c3aed);
+}

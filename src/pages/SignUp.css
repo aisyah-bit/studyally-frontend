@@ -1,0 +1,123 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1rem;
+  background: linear-gradient(135deg, #8e8dfa, #b87ee6);
+}
+
+.signup-box {
+  width: 100%;
+  max-width: 500px;
+  padding: 2.5rem 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.lock-icon {
+  background-color: #e7ddfa;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.signup-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.input-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding: 12px 45px 12px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #fff;
+}
+
+.password-wrapper input:focus {
+  border-color: #6c5dd3;
+  outline: none;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6c5dd3;
+}
+
+.signup-button {
+  background-color: #6c5dd3;
+  color: #fff;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+}
+
+.signup-button:hover {
+  background-color: #5b4ac9;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.login-text {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.login-text a {
+  color: #6c5dd3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
