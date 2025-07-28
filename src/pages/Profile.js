@@ -58,11 +58,25 @@ export default function ManageProfile() {
       studySubjects: [...formData.studySubjects, ""],
     });
 
+  const removeSubjectField = (index) => {
+    if (formData.studySubjects.length > 1) {
+      const updated = formData.studySubjects.filter((_, i) => i !== index);
+      setFormData({ ...formData, studySubjects: updated });
+    }
+  };
+
   const addScheduleField = () =>
     setFormData({
       ...formData,
       studySchedule: [...formData.studySchedule, { day: "", time: "" }],
     });
+
+  const removeScheduleField = (index) => {
+    if (formData.studySchedule.length > 1) {
+      const updated = formData.studySchedule.filter((_, i) => i !== index);
+      setFormData({ ...formData, studySchedule: updated });
+    }
+  };
 
   // ✅ Save/update the current user's profile
   const handleSave = async (e) => {
@@ -88,100 +102,164 @@ export default function ManageProfile() {
 
   return (
     <Layout username={formData.fullName || "User"}>
-      <div className="profile-container">
-        <div className="profile-header">
-          <h2>Edit Profile</h2>
-        </div>
-        <div className="profile-card">
-          <form className="profile-form" onSubmit={handleSave}>
-            <div className="form-group">
-              <label>Full Name</label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-              />
+      <div className="profile-page">
+        <div className="profile-container">
+          <div className="profile-card">
+            <div className="profile-header">
+              <h2 className="profile-title">Edit Profile</h2>
+              <p className="profile-subtitle">Update your personal information and study preferences</p>
             </div>
 
-            <div className="form-group">
-              <label>Phone no</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                required
-                pattern="[0-9]{10,15}"
-                placeholder="e.g. 0123456789"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Location</label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Study Subjects</label>
-              {formData.studySubjects.map((subject, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  value={subject}
-                  onChange={(e) => handleSubjectChange(index, e.target.value)}
-                  placeholder={`Subject #${index + 1}`}
-                />
-              ))}
-              <button type="button" onClick={addSubjectField}>
-                + Add Subject
-              </button>
-            </div>
-
-            <div className="form-group">
-              <label>Study Schedule</label>
-              {formData.studySchedule.map((entry, index) => (
-                <div key={index} style={{ display: "flex", gap: "10px" }}>
-                  <select
-                    value={entry.day}
-                    onChange={(e) =>
-                      handleScheduleChange(index, "day", e.target.value)
-                    }
-                  >
-                    <option value="">Select Day</option>
-                    <option value="Monday">Monday</option>
-                    <option value="Tuesday">Tuesday</option>
-                    <option value="Wednesday">Wednesday</option>
-                    <option value="Thursday">Thursday</option>
-                    <option value="Friday">Friday</option>
-                    <option value="Saturday">Saturday</option>
-                    <option value="Sunday">Sunday</option>
-                  </select>
-                  <input
-                    type="time"
-                    value={entry.time}
-                    onChange={(e) =>
-                      handleScheduleChange(index, "time", e.target.value)
-                    }
-                  />
+            <div className="profile-content">
+              <form
+                className="profile-form"
+                onSubmit={handleSave}
+                tabIndex="0"
+                aria-label="Profile form with smooth scrolling - use arrow keys to navigate"
+                role="region"
+                aria-describedby="profile-form-description"
+              >
+                <div id="profile-form-description" className="sr-only">
+                  This form allows you to edit your profile information. The form supports smooth scrolling and keyboard navigation.
                 </div>
-              ))}
-              <button type="button" onClick={addScheduleField}>
-                + Add Study Time
-              </button>
-            </div>
+                {/* Basic Information Section */}
+                <div className="form-section">
+                  <h3 className="section-title">Basic Information</h3>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label className="form-label">Full Name <span className="required">*</span></label>
+                      <input
+                        className="form-input"
+                        type="text"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Phone Number <span className="required">*</span></label>
+                      <input
+                        className="form-input"
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        required
+                        pattern="[0-9]{10,15}"
+                        placeholder="e.g. 0123456789"
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Location</label>
+                    <input
+                      className="form-input"
+                      type="text"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleInputChange}
+                      placeholder="Enter your location"
+                    />
+                  </div>
+                </div>
 
-            <div className="form-buttons">
-              <button type="submit" className="btn-save">
-                Save
-              </button>
+                {/* Study Subjects Section */}
+                <div className="form-section">
+                  <h3 className="section-title">Study Subjects</h3>
+                  <div
+                    className="dynamic-list"
+                    tabIndex="0"
+                    aria-label="Study subjects list with smooth scrolling"
+                    role="region"
+                  >
+                    {formData.studySubjects.map((subject, index) => (
+                      <div key={index} className="dynamic-item">
+                        <input
+                          className="form-input"
+                          type="text"
+                          value={subject}
+                          onChange={(e) => handleSubjectChange(index, e.target.value)}
+                          placeholder={`Subject #${index + 1}`}
+                        />
+                        {formData.studySubjects.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn-remove"
+                            onClick={() => removeSubjectField(index)}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button type="button" className="btn-add" onClick={addSubjectField}>
+                      + Add Subject
+                    </button>
+                  </div>
+                </div>
+
+                {/* Study Schedule Section */}
+                <div className="form-section">
+                  <h3 className="section-title">Study Schedule</h3>
+                  <div
+                    className="dynamic-list"
+                    tabIndex="0"
+                    aria-label="Study schedule list with smooth scrolling"
+                    role="region"
+                  >
+                    {formData.studySchedule.map((entry, index) => (
+                      <div key={index} className="dynamic-item schedule-item">
+                        <select
+                          className="form-select"
+                          value={entry.day}
+                          onChange={(e) =>
+                            handleScheduleChange(index, "day", e.target.value)
+                          }
+                        >
+                          <option value="">Select Day</option>
+                          <option value="Monday">Monday</option>
+                          <option value="Tuesday">Tuesday</option>
+                          <option value="Wednesday">Wednesday</option>
+                          <option value="Thursday">Thursday</option>
+                          <option value="Friday">Friday</option>
+                          <option value="Saturday">Saturday</option>
+                          <option value="Sunday">Sunday</option>
+                        </select>
+                        <input
+                          className="form-input"
+                          type="time"
+                          value={entry.time}
+                          onChange={(e) =>
+                            handleScheduleChange(index, "time", e.target.value)
+                          }
+                        />
+                        {formData.studySchedule.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn-remove"
+                            onClick={() => removeScheduleField(index)}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button type="button" className="btn-add" onClick={addScheduleField}>
+                      + Add Study Time
+                    </button>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="form-buttons">
+                  <button type="submit" className="btn-primary">
+                    Save Profile
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </Layout>

@@ -13,7 +13,6 @@ import {
 import { auth, db } from "../pages/firebaseConfig";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import logo from "../pages/logo.png";
-import profilePic from "../pages/logo.png";
 import "./layout.css";
 
 const Layout = ({ children }) => {
@@ -69,62 +68,69 @@ const Layout = ({ children }) => {
   }, []);
 
   const navItems = [
-    { path: "/home", label: "Dashboard", icon: <BookOpen size={18} /> },
-    { path: "/study-spots", label: "Study Spots", icon: <MapPin size={18} /> },
-    { path: "/search-group", label: "Search Study Group", icon: <Search size={18} /> },
-    { path: "/create-group", label: "Create Study Group", icon: <Plus size={18} /> },
-    { path: chatLink, label: "Chats", icon: <MessageSquare size={18} /> },
-    { path: "/manage-profile", label: "Manage Profile", icon: <User size={18} /> }
+    { path: "/home", label: "Dashboard", icon: <BookOpen size={20} /> },
+    { path: "/study-spots", label: "Study Spots", icon: <MapPin size={20} /> },
+    { path: "/search-group", label: "Search Study Group", icon: <Search size={20} /> },
+    { path: "/create-group", label: "Create Study Group", icon: <Plus size={20} /> },
+    { path: chatLink, label: "Chats", icon: <MessageSquare size={20} /> },
+    { path: "/manage-profile", label: "Manage Profile", icon: <User size={20} /> }
   ];
 
+  // Get first letter of username for avatar
+  const getFirstLetter = (name) => {
+    return name ? name.charAt(0).toUpperCase() : "U";
+  };
+
   return (
-    <div className="dashboard-container">
-      {/* Top Bar */}
-      <div className="top-bar">
-        <div className="left-side">
-          <img src={logo} alt="Logo" className="logo" />
-          <span className="product-name">StudyAlly</span>
-        </div>
-        <div className="right-side">
-          <span className="greeting">Hi, {username.split(" ")[0]}</span>
-          <div className="profile-dropdown" ref={dropdownRef}>
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="profile-pic"
-              onClick={toggleDropdown}
-            />
-            <div className={`dropdown-content ${dropdownOpen ? "open" : ""}`}>
-              <NavLink to="/manage-profile">
-                <Settings size={16} /> Edit Profile
-              </NavLink>
-              <NavLink to="/logout">
-                <LogOut size={16} /> Logout
-              </NavLink>
+    <div className="layout-page">
+      <div className="layout-container">
+        {/* Top Bar */}
+        <div className="top-bar">
+          <div className="left-side">
+            <img src={logo} alt="Logo" className="logo" />
+            <span className="product-name">StudyAlly</span>
+          </div>
+          <div className="right-side">
+            <span className="greeting">Hi, {username.split(" ")[0]}</span>
+            <div className="profile-dropdown" ref={dropdownRef}>
+              <div
+                className="profile-pic"
+                onClick={toggleDropdown}
+              >
+                {getFirstLetter(username)}
+              </div>
+              <div className={`dropdown-content ${dropdownOpen ? "open" : ""}`}>
+                <NavLink to="/manage-profile" className="dropdown-item">
+                  <Settings size={16} /> Edit Profile
+                </NavLink>
+                <NavLink to="/logout" className="dropdown-item">
+                  <LogOut size={16} /> Logout
+                </NavLink>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Body with Sidebar */}
-      <div className="body-container">
-        <aside className="sidebar">
-          <ul className="nav-list">
-            {navItems.map((item) => (
-              <li key={item.path}>
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-                >
-                  {item.icon}
-                  <span className="nav-label">{item.label}</span>
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </aside>
+        {/* Body with Sidebar */}
+        <div className="body-container">
+          <aside className="sidebar">
+            <ul className="nav-list">
+              {navItems.map((item) => (
+                <li key={item.path}>
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                  >
+                    {item.icon}
+                    <span className="nav-label">{item.label}</span>
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </aside>
 
-        <main className="main-content frosted-glass">{children}</main>
+          <main className="main-content frosted-glass">{children}</main>
+        </div>
       </div>
     </div>
   );

@@ -1,23 +1,23 @@
-/* Layout Page Scoped Styles */
-.layout-page {
+/* Admin Layout Scoped Styles */
+.admin-layout-page {
   font-family: 'Inter', 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
   width: 100vw;
   height: 100vh;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   position: relative;
   box-sizing: border-box;
 }
 
-.layout-page * {
+.admin-layout-page * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Main Container */
-.layout-page .layout-container {
+/* Main Admin Container */
+.admin-layout-page .admin-dashboard-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -32,8 +32,8 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Top Bar */
-.layout-page .top-bar {
+/* Admin Top Bar */
+.admin-layout-page .admin-top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,13 +45,13 @@
   z-index: 100;
 }
 
-.layout-page .left-side {
+.admin-layout-page .admin-left-side {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.layout-page .product-name {
+.admin-layout-page .admin-product-name {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1f2937;
@@ -61,24 +61,24 @@
   background-clip: text;
 }
 
-.layout-page .right-side {
+.admin-layout-page .admin-right-side {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.layout-page .greeting {
+.admin-layout-page .admin-greeting {
   font-weight: 600;
   color: #374151;
   font-size: 0.95rem;
 }
 
-/* Profile Dropdown */
-.layout-page .profile-dropdown {
+/* Admin Profile Dropdown */
+.admin-layout-page .admin-profile-dropdown {
   position: relative;
 }
 
-.layout-page .profile-pic {
+.admin-layout-page .admin-profile-pic {
   width: 44px;
   height: 44px;
   border-radius: 12px;
@@ -89,17 +89,14 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
-  color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
 }
 
-.layout-page .profile-pic:hover {
+.admin-layout-page .admin-profile-pic:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
-.layout-page .dropdown-content {
+.admin-layout-page .admin-dropdown-content {
   position: absolute;
   top: 100%;
   right: 0;
@@ -116,13 +113,13 @@
   margin-top: 8px;
 }
 
-.layout-page .dropdown-content.open {
+.admin-layout-page .admin-dropdown-content.open {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.layout-page .dropdown-item {
+.admin-layout-page .admin-dropdown-item {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -137,48 +134,46 @@
   color: #374151;
   border-radius: 8px;
   margin: 4px;
-  text-decoration: none;
 }
 
-.layout-page .dropdown-item:hover {
+.admin-layout-page .admin-dropdown-item:hover {
   background: #f3f4f6;
 }
 
-/* Body Container */
-.layout-page .body-container {
+/* Admin Body Container */
+.admin-layout-page .admin-body-container {
   display: flex;
   flex: 1;
-  padding: 0;
-  gap: 0;
+  padding: 24px;
+  gap: 24px;
   min-height: 0;
   align-items: stretch;
   height: calc(100vh - 80px);
 }
 
-/* Sidebar */
-.layout-page .sidebar {
+/* Admin Sidebar */
+.admin-layout-page .admin-sidebar {
   width: 280px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-radius: 0;
+  border-radius: 20px;
   padding: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: none;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   height: 100%;
   align-self: stretch;
   display: flex;
   flex-direction: column;
 }
 
-.layout-page .nav-list {
+.admin-layout-page .admin-nav-list {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.layout-page .nav-link {
+.admin-layout-page .admin-nav-link {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -191,13 +186,13 @@
   border: 1px solid transparent;
 }
 
-.layout-page .nav-link:hover {
+.admin-layout-page .admin-nav-link:hover {
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
   color: #667eea;
   transform: translateX(4px);
 }
 
-.layout-page .nav-link.active {
+.admin-layout-page .admin-nav-link.active {
   background: rgba(102, 126, 234, 0.1);
   border: 1px solid rgba(102, 126, 234, 0.25);
   color: #667eea;
@@ -205,26 +200,28 @@
   box-shadow: 0 0 12px rgba(102, 126, 234, 0.15);
 }
 
-.layout-page .nav-label {
+.admin-layout-page .admin-nav-label {
   font-size: 0.95rem;
 }
 
-/* Main Content */
-.layout-page .main-content {
+/* Admin Main Content */
+.admin-layout-page .admin-main-content {
   flex: 1;
-  padding: 0;
+  padding: 16px;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(20px);
   overflow: hidden;
-  border-radius: 0;
-  box-shadow: none;
-  border: none;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   min-height: 0;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Logo */
-.layout-page .logo {
+/* Admin Logo */
+.admin-layout-page .admin-logo {
   height: 48px;
   width: 48px;
   border-radius: 12px;
@@ -234,54 +231,40 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .layout-page .body-container {
+  .admin-layout-page .admin-body-container {
     flex-direction: column;
-    gap: 0;
+    gap: 16px;
   }
-
-  .layout-page .sidebar {
+  
+  .admin-layout-page .admin-sidebar {
     width: 100%;
-    height: auto;
-    border-radius: 0;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
-
-  .layout-page .nav-list {
+  
+  .admin-layout-page .admin-nav-list {
     flex-direction: row;
     overflow-x: hidden;
     flex-wrap: wrap;
   }
-
-  .layout-page .nav-link {
+  
+  .admin-layout-page .admin-nav-link {
     white-space: nowrap;
-  }
-
-  .layout-page .main-content {
-    flex: 1;
-    height: calc(100vh - 160px);
   }
 }
 
 @media (max-width: 640px) {
-  .layout-page .top-bar {
+  .admin-layout-page .admin-top-bar {
     padding: 12px 16px;
   }
-
-  .layout-page .product-name {
-    font-size: 1.25rem;
-  }
-
-  .layout-page .sidebar {
+  
+  .admin-layout-page .admin-body-container {
     padding: 16px;
   }
-
-  .layout-page .nav-link {
-    padding: 12px 16px;
-    font-size: 0.9rem;
+  
+  .admin-layout-page .admin-main-content {
+    padding: 20px;
   }
-
-  .layout-page .main-content {
-    height: calc(100vh - 140px);
+  
+  .admin-layout-page .admin-product-name {
+    font-size: 1.25rem;
   }
 }

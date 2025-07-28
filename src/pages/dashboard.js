@@ -1,245 +1,294 @@
-import React, { useState, useRef, useEffect } from "react";
+// ✅ Dashboard.js (Updated to use Layout Component)
+import { useState, useEffect } from "react";
 import { auth, db } from "../pages/firebaseConfig";
-import { doc, getDoc, getDocs, collection } from "firebase/firestore";
-import { NavLink } from "react-router-dom";
+import { getDocs, collection } from "firebase/firestore";
+import Layout from "../components/layout";
 import {
-  BookOpen, MapPin, Search, Plus,
-  MessageSquare, User, Settings, LogOut
-} from "lucide-react";
-import logo from "../pages/logo.png";
-import profilePic from "../pages/logo.png";
-import {
-  PeakStudyHourChart,
   SubjectPieChart,
-  WeeklyGrowthChart,
   PopularSpotsChart,
   ActiveMembersChart,
-  CollabTopicsChart
 } from "../components/AnalyticsCharts";
 import "./dashboard.css";
 
 export default function Dashboard() {
-  const [username, setUsername] = useState("Loading...");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
 
-  const [hourChartData, setHourChartData] = useState(null);
   const [subjectChartData, setSubjectChartData] = useState(null);
-  const [growthChartData, setGrowthChartData] = useState(null);
   const [popularSpotsData, setPopularSpotsData] = useState(null);
   const [activeMembersData, setActiveMembersData] = useState(null);
-  const [collabTopicsData, setCollabTopicsData] = useState(null);
-  const toggleDropdown = () => setDropdownOpen(prev => !prev);
+  const [upcomingSessions, setUpcomingSessions] = useState([]);
+  const [isLoadingAnalytics, setIsLoadingAnalytics] = useState(true);
 
-  useEffect(() => {
-    const fetchUsername = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        const docSnap = await getDoc(doc(db, "users", user.uid));
-        if (docSnap.exists()) {
-          setUsername(docSnap.data().name || "User");
-        }
-      }
-    };
-    fetchUsername();
-  }, []);
+  // Dynamic motivation state
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+  const [currentTipIndex, setCurrentTipIndex] = useState(0);
+  const [isQuoteFading, setIsQuoteFading] = useState(false);
+  const [isTipFading, setIsTipFading] = useState(false);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+
+
+  // Loading component for charts - optimized for compact layout
+  const LoadingChart = () => (
+    <div className="loading-content">
+      <div className="loading-spinner"></div>
+      <p style={{ fontSize: '0.9rem', margin: 0 }}>Loading...</p>
+    </div>
+  );
+
+  // Dynamic motivation content arrays
+  const motivationalQuotes = [
+    "Success is the sum of small efforts repeated day in and day out.",
+    "The expert in anything was once a beginner.",
+    "Education is the most powerful weapon which you can use to change the world.",
+    "Learning never exhausts the mind.",
+    "The beautiful thing about learning is that no one can take it away from you.",
+    "Study hard, for the well is deep, and our brains are shallow.",
+    "Knowledge is power. Information is liberating.",
+    "The more that you read, the more things you will know.",
+    "Continuous effort - not strength or intelligence - is the key to unlocking potential.",
+    "Excellence is never an accident. It is always the result of high intention and intelligent effort."
+  ];
+
+  const studyTechniques = [
+    "Try the Pomodoro Technique: 25 minutes focused study, 5 minute break.",
+    "Use active recall: Test yourself instead of just re-reading notes.",
+    "Practice spaced repetition: Review material at increasing intervals.",
+    "Create mind maps to visualize connections between concepts.",
+    "Teach someone else - it's the best way to test your understanding.",
+    "Use the Feynman Technique: Explain concepts in simple terms.",
+    "Take handwritten notes to improve retention and comprehension.",
+    "Study in different locations to strengthen memory associations.",
+    "Break large topics into smaller, manageable chunks.",
+    "Use mnemonics and memory palaces for complex information."
+  ];
+
+
 
   useEffect(() => {
     const fetchUserAnalytics = async () => {
+      setIsLoadingAnalytics(true);
       const user = auth.currentUser;
       const studySpotMap = {};
       const groupMemberMap = {};
-      const topicsMap = {};
-      if (!user) return;
+      const subjectMap = {};
+      if (!user) {
+        setIsLoadingAnalytics(false);
+        return;
+      }
 
       const groupSnap = await getDocs(collection(db, "studyGroups"));
-      const hourMap = new Array(24).fill(0);
-      const subjectMap = {};
-      const weeklyJoinMap = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const upcomingList = [];
 
       for (const groupDoc of groupSnap.docs) {
         const data = groupDoc.data();
         const isInGroup = data.creatorEmail === user.email || (data.joinedList || []).includes(user.email);
+
         if (isInGroup) {
-          const subj = data.studySubject || "Unknown";
-          subjectMap[subj] = (subjectMap[subj] || 0) + 1;
+          const sessionDay = data.studyDay;
+          const sessionTime = data.studyTime;
+          const groupName = data.groupName || "Unnamed Group";
 
-          const timestamps = data.joinedTimestamps || [];
-          timestamps.forEach(entry => {
-            if (entry.timestamp) {
-              const date = entry.timestamp.toDate();
-              const day = days[date.getDay()];
-              weeklyJoinMap[day]++;
-            }
-          });
+          if (sessionDay && sessionTime) {
+            upcomingList.push({ groupName, day: sessionDay, time: sessionTime });
 
-          const messagesSnap = await getDocs(collection(db, `chats/${groupDoc.id}/messages`));
-          messagesSnap.forEach(msg => {
-            const msgData = msg.data();
-            if (msgData.sender === user.email) {
-              const ts = msgData.timestamp?.toDate();
-              if (ts) hourMap[ts.getHours()]++;
-            }
-          });
+            const subj = data.studySubject || "Unknown";
+            subjectMap[subj] = (subjectMap[subj] || 0) + 1;
+
+            const groupNameKey = data.groupName || "Unnamed Group";
+            const memberCount = (data.joinedList || []).length;
+            groupMemberMap[groupNameKey] = memberCount;
+          }
         }
 
         const spot = data.location || "Unknown Spot";
         studySpotMap[spot] = (studySpotMap[spot] || 0) + 1;
-
-        const groupName = data.groupName || "Unnamed Group";
-        const memberCount = (data.joinedList || []).length;
-        groupMemberMap[groupName] = memberCount;
-
-        const keywords = data.groupKeywords || [];
-        keywords.forEach(k => topicsMap[k] = (topicsMap[k] || 0) + 1);
-
       }
 
-      setHourChartData({
-        labels: [...Array(24).keys()],
-        datasets: [{
-          label: 'Messages Sent',
-          data: hourMap,
-          backgroundColor: '#a855f7',
-        }]
-      });
+      const dayOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      upcomingList.sort((a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day));
+      setUpcomingSessions(upcomingList);
 
       setSubjectChartData({
         labels: Object.keys(subjectMap),
         datasets: [{
           label: 'Study Groups',
           data: Object.values(subjectMap),
-          backgroundColor: ['#f87171', '#facc15', '#34d399', '#60a5fa', '#c084fc']
+          backgroundColor: ['#3b82f6', '#64748b', '#059669', '#d97706', '#7c3aed', '#0891b2', '#dc2626']
         }]
       });
 
-      setGrowthChartData({
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        datasets: [{
-          label: 'New Joins',
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(d => weeklyJoinMap[d]),
-          borderColor: '#f59e0b',
-          fill: false,
-        }]
-      });
+      const reviewsSnap = await getDocs(collection(db, "reviews"));
+      const spotRatings = [];
 
+      for (const spotDoc of reviewsSnap.docs) {
+        const spotId = spotDoc.id;
+        const userReviewsSnap = await getDocs(collection(db, `reviews/${spotId}/userReviews`));
+
+        let totalRating = 0;
+        let count = 0;
+        let spotName = spotId;
+
+        userReviewsSnap.forEach((doc) => {
+          const data = doc.data();
+          if (data.rating) {
+            totalRating += data.rating;
+            count++;
+          }
+          if (data.spotName) {
+            spotName = data.spotName;
+          }
+        });
+
+        if (count > 0) {
+          const average = totalRating / count;
+          spotRatings.push({ spotName, average });
+        }
+      }
+
+      const top5RatedSpots = spotRatings.sort((a, b) => b.average - a.average).slice(0, 5);
       setPopularSpotsData({
-  labels: Object.keys(studySpotMap),
-  datasets: [{
-    label: 'Visits',
-    data: Object.values(studySpotMap),
-    backgroundColor: '#60a5fa'
-  }]
-});
+        labels: top5RatedSpots.map((s) => s.spotName),
+        datasets: [{
+          label: "Average Rating",
+          data: top5RatedSpots.map((s) => s.average.toFixed(2)),
+          backgroundColor: "#3b82f6"
+        }]
+      });
 
-        setActiveMembersData({
-          labels: Object.keys(groupMemberMap),
-          datasets: [{
-            label: 'Members',
-            data: Object.values(groupMemberMap),
-            backgroundColor: '#34d399'
-          }]
-        });
+      const sortedMembers = Object.entries(groupMemberMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      setActiveMembersData({
+        labels: sortedMembers.map(([groupName]) => groupName),
+        datasets: [{
+          label: 'Members',
+          data: sortedMembers.map(([_, count]) => count),
+          backgroundColor: '#059669'
+        }]
+      });
 
-        setCollabTopicsData({
-          labels: Object.keys(topicsMap),
-          datasets: [{
-            label: 'Mentions',
-            data: Object.values(topicsMap),
-            backgroundColor: '#f472b6'
-          }]
-        });
-
+      setIsLoadingAnalytics(false);
     };
+
     fetchUserAnalytics();
   }, []);
 
+  // Dynamic motivation rotation effect
+  useEffect(() => {
+    const rotateContent = () => {
+      // Rotate quotes every 5 seconds
+      const quoteInterval = setInterval(() => {
+        setIsQuoteFading(true);
+        setTimeout(() => {
+          setCurrentQuoteIndex((prev) => (prev + 1) % motivationalQuotes.length);
+          setIsQuoteFading(false);
+        }, 300); // Fade duration
+      }, 5000);
+
+      // Rotate tips every 5 seconds (offset by 2.5 seconds)
+      const tipInterval = setInterval(() => {
+        setIsTipFading(true);
+        setTimeout(() => {
+          setCurrentTipIndex((prev) => (prev + 1) % studyTechniques.length);
+          setIsTipFading(false);
+        }, 300); // Fade duration
+      }, 5000);
+
+      // Offset tip rotation by 2.5 seconds
+      const offsetTipInterval = setTimeout(() => {
+        setIsTipFading(true);
+        setTimeout(() => {
+          setCurrentTipIndex((prev) => (prev + 1) % studyTechniques.length);
+          setIsTipFading(false);
+        }, 300);
+      }, 2500);
+
+      return () => {
+        clearInterval(quoteInterval);
+        clearInterval(tipInterval);
+        clearTimeout(offsetTipInterval);
+      };
+    };
+
+    const cleanup = rotateContent();
+    return cleanup;
+  }, [motivationalQuotes.length, studyTechniques.length]);
+
   return (
-    <div className="dashboard-container">
-      {/* Top Bar */}
-      <div className="top-bar">
-        <div className="left-side">
-          <img src={logo} alt="Logo" className="logo" />
-          <span className="product-name">StudyAlly</span>
-        </div>
-        <div className="right-side">
-          <span className="greeting">Hi, {username}</span>
-          <div className="profile-dropdown" ref={dropdownRef}>
-            <img src={profilePic} alt="Profile" className="profile-pic" onClick={toggleDropdown} />
-            <div className={`dropdown-content ${dropdownOpen ? "open" : ""}`}>
-              <NavLink to="/manage-profile"><Settings size={16} />Edit Profile</NavLink>
-              <NavLink to="/logout"><LogOut size={16} />Logout</NavLink>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Sidebar + Main Content */}
-      <div className="body-container">
-        <aside className="sidebar">
-          <ul className="nav-list">
-            <li><NavLink to="/home" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}><BookOpen /><span>Dashboard</span></NavLink></li>
-            <li><NavLink to="/study-spots" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}><MapPin /><span>Study Spots</span></NavLink></li>
-            <li><NavLink to="/search-group" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}><Search /><span>Search Study Group</span></NavLink></li>
-            <li><NavLink to="/create-group" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}><Plus /><span>Create Study Group</span></NavLink></li>
-            <li><NavLink to="/chats" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}><MessageSquare /><span>Chats</span></NavLink></li>
-            <li><NavLink to="/manage-profile" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}><User /><span>Manage Profile</span></NavLink></li>
-          </ul>
-        </aside>
-
-        <main className="main-content">
-          <div className="charts-section charts-full">
-            {hourChartData && (
-              <div className="chart-card">
-                <h3 className="chart-title">⏰ Peak Study Hours</h3>
-                <PeakStudyHourChart data={hourChartData} />
-              </div>
-            )}
-            {subjectChartData && (
-              <div className="chart-card">
-                <h3 className="chart-title">📚 Most Common Subjects</h3>
+    <Layout>
+      <div className="dashboard-page">
+        <div className="charts-section">
+            {/* Most Common Subjects */}
+            <div className={`chart-card subjects ${isLoadingAnalytics ? 'loading' : ''}`}>
+              <h3 className="chart-title">
+                Subject Distribution Analysis
+              </h3>
+              {subjectChartData ? (
                 <SubjectPieChart data={subjectChartData} />
-              </div>
-            )}
-            {growthChartData && (
-              <div className="chart-card">
-                <h3 className="chart-title">📈 Weekly Growth</h3>
-                <WeeklyGrowthChart data={growthChartData} />
-              </div>
-            )}
+              ) : (
+                <LoadingChart />
+              )}
+            </div>
 
-            {popularSpotsData && (
-            <div className="chart-card">
-              <h3 className="chart-title">📍 Popular Study Spots</h3>
-              <PopularSpotsChart data={popularSpotsData} />
+            {/* Upcoming Group Sessions */}
+            <div className="chart-card sessions">
+              <h3 className="chart-title">
+                Scheduled Study Sessions
+              </h3>
+              {upcomingSessions.length > 0 ? (
+                <div className="session-list-grid">
+                  {upcomingSessions.map((session, index) => (
+                    <div key={index} className="session-card">
+                      <div className="session-header">
+                        <span className="session-day">{session.day}</span>
+                        <span className="session-time">@ {session.time}</span>
+                      </div>
+                      <div className="session-group">{session.groupName}</div>
+                    </div>
+                  ))}
+                </div>
+              ) : isLoadingAnalytics ? (
+                <LoadingChart />
+              ) : (
+                <p style={{ color: "#888", fontStyle: "italic", padding: "1rem" }}>
+                  No upcoming sessions found.
+                </p>
+              )}
             </div>
-          )}
-          {activeMembersData && (
-            <div className="chart-card">
-              <h3 className="chart-title">👥 Active Group Members</h3>
-              <ActiveMembersChart data={activeMembersData} />
+
+            {/* Top Study Spots - Most Prominent Card */}
+            <div className={`chart-card top-spots ${isLoadingAnalytics ? 'loading' : ''}`}>
+              <h3 className="chart-title">
+                Popular Study Locations
+              </h3>
+              {popularSpotsData ? (
+                <PopularSpotsChart data={popularSpotsData} />
+              ) : (
+                <LoadingChart />
+              )}
             </div>
-          )}
-          {collabTopicsData && (
-            <div className="chart-card">
-              <h3 className="chart-title">🧠 Top Collaboration Topics</h3>
-              <CollabTopicsChart data={collabTopicsData} />
+
+            {/* Active Group Members */}
+            <div className={`chart-card members ${isLoadingAnalytics ? 'loading' : ''}`}>
+              <h3 className="chart-title">
+                Member Engagement Metrics
+              </h3>
+              {activeMembersData ? (
+                <ActiveMembersChart data={activeMembersData} />
+              ) : (
+                <LoadingChart />
+              )}
             </div>
-          )}
-          </div>
-        </main>
+
+            {/* Study Motivation */}
+            <div className="chart-card motivation">
+              <h3 className="chart-title">
+                Study Insights & Motivation
+              </h3>
+              <p className={`study-quote ${isQuoteFading ? 'fading' : ''}`}>“{motivationalQuotes[currentQuoteIndex]}”</p>
+              <p className={`study-technique ${isTipFading ? 'fading' : ''}`}>
+                {studyTechniques[currentTipIndex]}
+              </p>
+            </div>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }

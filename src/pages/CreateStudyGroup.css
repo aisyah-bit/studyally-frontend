@@ -1,191 +1,840 @@
-/* Reset and base styles */
-* {
+/* Scoped CreateStudyGroup styles - Reference Design Implementation */
+
+/* Screen Reader Only Content */
+.create-study-group-page .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Override Layout padding for full viewport usage - Modern browsers */
+.layout-page .main-content:has(.create-study-group-page) {
+  padding: 0.5rem !important;
+}
+
+/* Ensure proper containment within Layout */
+.layout-page .main-content .create-study-group-page {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
+/* Fallback for browsers that don't support :has() - Use JavaScript detection instead of global CSS */
+/* This will be handled by component-specific logic if needed */
+
+.create-study-group-page {
+  font-family: 'Inter', 'Segoe UI', sans-serif !important;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+  overflow: hidden;
   position: relative;
-  overflow-x: hidden;
 }
 
-body::before {
+.create-study-group-page * {
+  box-sizing: border-box;
+}
+
+.create-study-group-page .form-container {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.create-study-group-page .form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin: 0.5rem;
+}
+
+.create-study-group-page .study-group-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.create-study-group-page .group-list-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Enhanced Purple Header Section */
+.create-study-group-page .form-header {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #9333ea 100%);
+  padding: 2rem 2rem;
+  border-radius: 16px 16px 0 0;
+  text-align: center;
+  color: white;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.create-study-group-page .form-header::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
-  z-index: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
 }
 
-.container {
+.create-study-group-page .form-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: white;
+  letter-spacing: -0.025em;
   position: relative;
   z-index: 1;
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
-.profile-header {
+.create-study-group-page .form-subtitle {
+  font-size: 0.95rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+  line-height: 1.4;
+}
+
+/* Enhanced Form Content Area with Smooth Scrolling Support */
+.create-study-group-page .form-content {
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 1.5rem 2rem;
+  min-height: 0;
+  align-content: start;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  /* Performance optimizations */
+  will-change: scroll-position;
+  contain: layout style paint;
+  /* Mobile momentum scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* Add padding back through pseudo-element to maintain spacing */
+  position: relative;
+}
+
+.create-study-group-page .form-content::before {
+  content: '';
+  grid-column: 1 / -1;
+  height: 1.5rem;
+  width: 100%;
+}
+
+.create-study-group-page .form-content::after {
+  content: '';
+  grid-column: 1 / -1;
+  height: 1.5rem;
+  width: 100%;
+}
+
+/* Add horizontal padding through container */
+.create-study-group-page .form-content > * {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+/* Custom Scrollbar for Form Content */
+.create-study-group-page .form-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.create-study-group-page .form-content::-webkit-scrollbar-track {
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.create-study-group-page .form-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.4) 100%);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.create-study-group-page .form-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(168, 85, 247, 0.6) 100%);
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.2);
+}
+
+/* Keyboard Navigation and Accessibility Enhancements */
+.create-study-group-page .form-content[tabindex="0"]:focus {
+  outline: 2px solid rgba(139, 92, 246, 0.5);
+  outline-offset: -2px;
+}
+
+.create-study-group-page .invite-list[tabindex="0"]:focus {
+  outline: 2px solid rgba(139, 92, 246, 0.5);
+  outline-offset: -2px;
+}
+
+/* Enhanced Focus Indicators */
+.create-study-group-page .form-input:focus,
+.create-study-group-page .form-select:focus,
+.create-study-group-page .radio-option:focus-within,
+.create-study-group-page .btn-add-invite:focus,
+.create-study-group-page .btn-remove:focus {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 2px;
+  z-index: 10;
+  position: relative;
+}
+
+/* Scroll Position Tracking for Screen Readers */
+.create-study-group-page .form-content[aria-label],
+.create-study-group-page .invite-list[aria-label] {
+  scroll-padding-top: 20px;
+  scroll-padding-bottom: 20px;
+}
+
+/* Enhanced Group List View - Professional Business Design */
+.create-study-group-page .enhanced-group-list-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  /* Performance optimizations */
+  will-change: scroll-position;
+  contain: layout style paint;
+  /* Mobile momentum scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar for Group List */
+.create-study-group-page .enhanced-group-list-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.create-study-group-page .enhanced-group-list-content::-webkit-scrollbar-track {
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.create-study-group-page .enhanced-group-list-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.4) 100%);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.create-study-group-page .enhanced-group-list-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(168, 85, 247, 0.6) 100%);
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.2);
+}
+
+/* No Groups State */
+.create-study-group-page .no-groups-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 400px;
+}
+
+.create-study-group-page .no-groups-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+
+.create-study-group-page .no-groups-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.025em;
+}
+
+.create-study-group-page .no-groups-message {
+  font-size: 1rem;
+  color: #6b7280;
   margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.create-study-group-page .create-first-group-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.create-study-group-page .create-first-group-btn:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+
+/* Enhanced Group Grid */
+.create-study-group-page .enhanced-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* Enhanced Group Cards */
+.create-study-group-page .enhanced-group-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.create-study-group-page .enhanced-group-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.create-study-group-page .enhanced-group-card:hover::before {
+  transform: scaleX(1);
+}
+
+.create-study-group-page .enhanced-group-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: #8b5cf6;
+}
+
+/* Group Card Header */
+.create-study-group-page .group-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.create-study-group-page .group-type-indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.create-study-group-page .group-type-indicator[data-type="assignment"] {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.create-study-group-page .group-status-badge {
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Group Card Content */
+.create-study-group-page .group-card-content {
+  margin-bottom: 1.5rem;
+}
+
+.create-study-group-page .group-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+
+.create-study-group-page .group-card-subject {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.create-study-group-page .group-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.create-study-group-page .detail-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.create-study-group-page .detail-icon {
+  font-size: 1rem;
+  width: 20px;
   text-align: center;
 }
 
-.page-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #d0d2d9, #e1dde5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5rem;
-}
-
-.page-subtitle {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 400;
-}
-
-.form-arrow-container {
-  display: flex;
-  gap: 1.5rem;
-  align-items: stretch;
-  min-height: calc(100vh - 200px);
-}
-
-.enhanced-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  padding: 2rem;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+.create-study-group-page .detail-text {
   flex: 1;
-  overflow-y: auto;
-  animation: slideInUp 0.6s ease-out;
+  font-weight: 500;
 }
 
-.enhanced-form {
+/* Group Card Actions */
+.create-study-group-page .group-card-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.create-study-group-page .action-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.create-study-group-page .edit-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+.create-study-group-page .edit-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.create-study-group-page .view-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: white;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3);
+}
+
+.create-study-group-page .view-btn:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+}
+
+.create-study-group-page .delete-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+.create-study-group-page .delete-btn:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Focus states for accessibility */
+.create-study-group-page .action-btn:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 1024px) {
+  .create-study-group-page .enhanced-group-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .create-study-group-page .enhanced-group-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .create-study-group-page .enhanced-group-card {
+    padding: 1.25rem;
+  }
+
+  .create-study-group-page .group-card-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .create-study-group-page .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .create-study-group-page .no-groups-container {
+    padding: 3rem 1.5rem;
+    min-height: 300px;
+  }
+
+  .create-study-group-page .no-groups-icon {
+    font-size: 3rem;
+  }
+
+  .create-study-group-page .no-groups-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-study-group-page .enhanced-group-grid {
+    padding: 0.75rem;
+  }
+
+  .create-study-group-page .enhanced-group-card {
+    padding: 1rem;
+  }
+
+  .create-study-group-page .group-card-title {
+    font-size: 1.125rem;
+  }
+
+  .create-study-group-page .detail-row {
+    font-size: 0.8rem;
+  }
+
+  .create-study-group-page .action-btn {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8rem;
+    min-height: 36px;
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .create-study-group-page .form-content,
+  .create-study-group-page .invite-list,
+  .create-study-group-page .enhanced-group-list-content {
+    scroll-behavior: auto;
+  }
+
+  .create-study-group-page .form-input,
+  .create-study-group-page .form-select,
+  .create-study-group-page .radio-option,
+  .create-study-group-page .btn-add-invite,
+  .create-study-group-page .btn-remove,
+  .create-study-group-page .create-first-group-btn,
+  .create-study-group-page .enhanced-group-card,
+  .create-study-group-page .action-btn {
+    transition: none;
+  }
+
+  .create-study-group-page .form-content::-webkit-scrollbar-thumb:hover,
+  .create-study-group-page .invite-list::-webkit-scrollbar-thumb:hover,
+  .create-study-group-page .enhanced-group-list-content::-webkit-scrollbar-thumb:hover {
+    transform: none;
+  }
+
+  .create-study-group-page .enhanced-group-card:hover,
+  .create-study-group-page .action-btn:hover {
+    transform: none;
+  }
+}
+
+/* Grid Layout Areas for Better Space Distribution */
+.create-study-group-page .basic-info-section {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.create-study-group-page .group-type-section {
+  grid-column: 1 / -1;
+}
+
+.create-study-group-page .schedule-section {
+  grid-column: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
-.form-row {
+.create-study-group-page .invite-section {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.create-study-group-page .additional-details-section {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
+  align-items: start;
 }
 
-.form-group {
+/* Section Dividers for Better Visual Separation */
+.create-study-group-page .basic-info-section::after,
+.create-study-group-page .group-type-section::after {
+  content: '';
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+  margin-top: 1.5rem;
+}
+
+.create-study-group-page .basic-info-section,
+.create-study-group-page .group-type-section {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+/* Enhanced Section Headers */
+.create-study-group-page .section-header {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.create-study-group-page .section-header::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  border-radius: 2px;
+}
+
+.create-study-group-page .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.create-study-group-page .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.form-label {
+/* Enhanced Form Labels and Inputs - Larger and More Prominent */
+.create-study-group-page .form-label {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.375rem;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #374151;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
 }
 
-.label-text {
+.create-study-group-page .label-text {
   color: #1f2937;
 }
 
-.required {
-  color: #ef4444;
+.create-study-group-page .required {
+  color: #dc2626;
   font-weight: 700;
+  font-size: 1rem;
 }
 
-.label-helper {
+.create-study-group-page .label-helper {
   font-size: 0.8rem;
   color: #6b7280;
   font-weight: 400;
   margin-left: 0.5rem;
+  font-style: italic;
 }
 
-.form-input,
-.form-select {
-  padding: 0.875rem 1rem;
+.create-study-group-page .form-input,
+.create-study-group-page .form-select {
+  padding: 1rem 1.25rem;
   border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  transition: all 0.3s ease;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: #1f2937;
+  width: 100%;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-height: 48px;
 }
 
-.form-input:focus,
-.form-select:focus {
+.create-study-group-page .form-input:hover,
+.create-study-group-page .form-select:hover {
+  border-color: #8b5cf6;
+  box-shadow: 0 2px 6px rgba(139, 92, 246, 0.1);
+}
+
+.create-study-group-page .form-input:focus,
+.create-study-group-page .form-select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 
-    0 0 0 3px rgba(102, 126, 234, 0.1),
-    0 4px 12px rgba(102, 126, 234, 0.15);
-  background: white;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15), 0 2px 8px rgba(139, 92, 246, 0.2);
+  background: #ffffff;
   transform: translateY(-1px);
 }
 
-.radio-group {
-  display: flex;
-  flex-direction: column;
+.create-study-group-page .form-input::placeholder,
+.create-study-group-page .form-select::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Enhanced Radio Button Group - More Prominent and Spacious */
+.create-study-group-page .radio-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
-.radio-option {
+.create-study-group-page .radio-option {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1.25rem;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-.radio-option:hover {
-  border-color: #667eea;
-  background: rgba(102, 126, 234, 0.05);
-  transform: translateY(-1px);
+.create-study-group-page .radio-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #9333ea 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-.radio-option input[type="radio"] {
+.create-study-group-page .radio-option:hover {
+  border-color: #8b5cf6;
+  background: #faf5ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+.create-study-group-page .radio-option:hover::before {
+  transform: scaleX(1);
+}
+
+.create-study-group-page .radio-option input[type="radio"] {
   display: none;
 }
 
-.radio-checkmark {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #d1d5db;
+.create-study-group-page .radio-option input[type="radio"]:checked + .radio-checkmark {
+  border-color: #8b5cf6;
+  background: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.create-study-group-page .radio-option input[type="radio"]:checked {
+  + .radio-checkmark::before {
+    transform: scaleX(1);
+  }
+}
+
+.create-study-group-page .radio-checkmark {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #d1d5db;
   border-radius: 50%;
   position: relative;
   flex-shrink: 0;
   margin-top: 2px;
+  transition: all 0.3s ease;
+  background: #ffffff;
 }
 
-.radio-option input[type="radio"]:checked + .radio-checkmark {
-  border-color: #667eea;
-  background: #667eea;
-}
-
-.radio-option input[type="radio"]:checked + .radio-checkmark::after {
+.create-study-group-page .radio-option input[type="radio"]:checked + .radio-checkmark::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -197,187 +846,465 @@ body::before {
   background: white;
 }
 
-.radio-label {
+.create-study-group-page .radio-label {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-}
-
-.radio-label strong {
-  color: #1f2937;
-  font-size: 1rem;
-}
-
-.radio-label small {
-  color: #6b7280;
-  font-size: 0.875rem;
-}
-
-.invite-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.invite-input-group {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.invite-input {
+  gap: 0.375rem;
   flex: 1;
 }
 
-.btn-remove {
-  width: 36px;
-  height: 36px;
+.create-study-group-page .radio-label strong {
+  color: #1f2937;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.create-study-group-page .radio-label small {
+  color: #6b7280;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+/* Enhanced Invite List Section with Smooth Scrolling */
+.create-study-group-page .invite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 120px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 2px solid #f3f4f6;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fafafa;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  /* Performance optimizations */
+  will-change: scroll-position;
+  contain: layout style paint;
+  /* Mobile momentum scrolling */
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* Custom Scrollbar for Invite List */
+.create-study-group-page .invite-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.create-study-group-page .invite-list::-webkit-scrollbar-track {
+  background: rgba(243, 244, 246, 0.5);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.create-study-group-page .invite-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.4) 100%);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.create-study-group-page .invite-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(168, 85, 247, 0.6) 100%);
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.2);
+}
+
+/* Scroll Fade Indicators for Invite List */
+.create-study-group-page .invite-list::before,
+.create-study-group-page .invite-list::after {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  height: 12px;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.create-study-group-page .invite-list::before {
+  top: 1rem;
+  background: linear-gradient(to bottom, rgba(250, 250, 250, 0.9) 0%, transparent 100%);
+}
+
+.create-study-group-page .invite-list::after {
+  bottom: 1rem;
+  background: linear-gradient(to top, rgba(250, 250, 250, 0.9) 0%, transparent 100%);
+}
+
+.create-study-group-page .invite-input-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.create-study-group-page .invite-input {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  font-size: 0.9rem;
+}
+
+.create-study-group-page .btn-remove {
+  width: 40px;
+  height: 40px;
   border: none;
-  background: #fee2e2;
+  background: #fef2f2;
   color: #dc2626;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.btn-remove:hover {
-  background: #fecaca;
-  transform: scale(1.05);
+.create-study-group-page .btn-remove:hover {
+  background: #fee2e2;
+  transform: scale(1.1);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
 }
 
-.btn-add-invite {
-  padding: 0.75rem 1rem;
+.create-study-group-page .btn-add-invite {
+  padding: 0.875rem 1.25rem;
   border: 2px dashed #d1d5db;
   background: transparent;
   color: #6b7280;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.3s ease;
   margin-top: 0.5rem;
+  width: 100%;
+  text-align: center;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.btn-add-invite:hover {
-  border-color: #667eea;
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.05);
+.create-study-group-page .btn-add-invite:hover {
+  border-color: #8b5cf6;
+  color: #8b5cf6;
+  background: #faf5ff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(139, 92, 246, 0.1);
 }
 
-.form-buttons {
+.create-study-group-page .btn-add-invite::before {
+  content: '+';
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* Enhanced Form Action Buttons - Larger and More Prominent */
+.create-study-group-page .form-buttons {
   display: flex;
   gap: 1rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+  padding: 1.5rem 2rem;
+  border-top: 2px solid #f3f4f6;
+  background: linear-gradient(135deg, #fafafa 0%, #f8fafc 100%);
+  border-radius: 0 0 16px 16px;
+  flex-shrink: 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+.create-study-group-page .btn-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #9333ea 100%);
   color: white;
   border: none;
-  padding: 0.875rem 2rem;
-  border-radius: 12px;
-  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-  flex: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 2;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-height: 52px;
 }
 
-.btn-primary:hover {
+.create-study-group-page .btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.create-study-group-page .btn-primary:hover::before {
+  left: 100%;
+}
+
+.create-study-group-page .btn-primary:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #7e22ce 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
 }
 
-.btn-cancel {
-  background: #f3f4f6;
+.create-study-group-page .btn-cancel {
+  background: #ffffff;
   color: #6b7280;
-  border: 2px solid #e5e7eb;
-  padding: 0.875rem 2rem;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
+  border: 2px solid #d1d5db;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-height: 52px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-cancel:hover {
-  background: #e5e7eb;
+.create-study-group-page .btn-cancel:hover {
+  background: #f9fafb;
   color: #374151;
+  border-color: #9ca3af;
   transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.btn-delete {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+.create-study-group-page .btn-delete {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
   border: none;
-  padding: 0.875rem 2rem;
-  border-radius: 12px;
-  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-  opacity: 0.5;
+  min-height: 52px;
 }
 
-.arrow-side {
+.create-study-group-page .btn-delete:hover:not(:disabled) {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.create-study-group-page .btn-delete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2);
+}
+
+/* View Toggle Button */
+.create-study-group-page .view-toggle {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
 }
 
-.enhanced-arrow {
-  width: 60px;
-  height: 60px;
+.create-study-group-page .toggle-button {
+  width: 56px;
+  height: 56px;
   border: none;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #9333ea 100%);
   color: white;
   border-radius: 50%;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
-.enhanced-arrow:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+.create-study-group-page .toggle-button:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #7e22ce 100%);
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
 }
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+/* Group List View */
+.create-study-group-page .group-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.create-study-group-page .group-item {
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.create-study-group-page .group-item:hover {
+  border-color: #8b5cf6;
+  background: #faf5ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
+}
+
+.create-study-group-page .group-item strong {
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.create-study-group-page .no-groups {
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Enhanced Responsive Design for Optimized Layout */
+@media (max-width: 1200px) {
+  .create-study-group-page .form-content {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem 1.75rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .create-study-group-page .basic-info-section {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .create-study-group-page .schedule-section,
+  .create-study-group-page .invite-section {
+    grid-column: 1;
+  }
+
+  .create-study-group-page .radio-group {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
   }
 }
 
 @media (max-width: 768px) {
-  .form-arrow-container {
+  /* Override Layout padding for mobile */
+  .layout-page .main-content:has(.create-study-group-page) {
+    padding: 0.25rem !important;
+  }
+
+  .create-study-group-page .form-container {
     flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .create-study-group-page .form-card {
+    margin: 0.25rem;
+  }
+
+  .create-study-group-page .view-toggle {
+    margin: 0.25rem;
+  }
+
+  .create-study-group-page .form-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .create-study-group-page .basic-info-section {
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .form-row {
+
+  .create-study-group-page .additional-details-section {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  .form-buttons {
-    flex-direction: column;
+
+  .create-study-group-page .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  .radio-option {
+
+  .create-study-group-page .radio-group {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .create-study-group-page .form-buttons {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .create-study-group-page .form-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .create-study-group-page .form-title {
+    font-size: 1.125rem;
+  }
+
+  .create-study-group-page .toggle-button {
+    width: 44px;
+    height: 44px;
+    font-size: 1.125rem;
+  }
+
+  .create-study-group-page .form-input,
+  .create-study-group-page .form-select {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .create-study-group-page .btn-primary,
+  .create-study-group-page .btn-cancel,
+  .create-study-group-page .btn-delete {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-study-group-page .form-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .create-study-group-page .form-content {
+    padding: 0.875rem 1rem;
+    gap: 0.625rem;
+  }
+
+  .create-study-group-page .form-buttons {
+    padding: 0.625rem 0.875rem;
+  }
+
+  .create-study-group-page .form-title {
+    font-size: 1rem;
+  }
+
+  .create-study-group-page .form-subtitle {
+    font-size: 0.75rem;
   }
 }

@@ -1,0 +1,567 @@
+/* Admin Manage Users Scoped Styles */
+.admin-manage-users-page {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-manage-users-page * {
+  box-sizing: border-box;
+}
+
+/* Header */
+.admin-manage-users-page .admin-manage-header {
+  margin-bottom: 8px;
+}
+
+.admin-manage-users-page .admin-manage-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-manage-users-page .admin-manage-header p {
+  color: #6b7280;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Controls */
+.admin-manage-users-page .admin-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-manage-users-page .admin-search-box,
+.admin-manage-users-page .admin-filter-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 16px;
+  min-width: 280px;
+  transition: border-color 0.3s ease;
+}
+
+.admin-manage-users-page .admin-search-box:focus-within,
+.admin-manage-users-page .admin-filter-box:focus-within {
+  border-color: #667eea;
+}
+
+.admin-manage-users-page .admin-search-box svg,
+.admin-manage-users-page .admin-filter-box svg {
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.admin-manage-users-page .admin-search-box input,
+.admin-manage-users-page .admin-filter-box select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #1f2937;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-manage-users-page .admin-search-box input::placeholder {
+  color: #9ca3af;
+}
+
+/* Loading */
+.admin-manage-users-page .admin-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 16px;
+}
+
+.admin-manage-users-page .admin-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.admin-manage-users-page .admin-loading p {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Users Container */
+.admin-manage-users-page .admin-users-wrapper {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-manage-users-page .admin-users-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+  padding-right: 8px;
+  margin-right: -8px;
+}
+
+/* Custom Scrollbar for Webkit browsers */
+.admin-manage-users-page .admin-users-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-manage-users-page .admin-users-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.admin-manage-users-page .admin-users-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.admin-manage-users-page .admin-users-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.admin-manage-users-page .admin-users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+/* User Card */
+.admin-manage-users-page .admin-user-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-manage-users-page .admin-user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* User Card Header */
+.admin-manage-users-page .admin-user-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-manage-users-page .admin-user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.admin-manage-users-page .admin-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-manage-users-page .admin-user-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-manage-users-page .admin-user-email {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.admin-manage-users-page .admin-user-email span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-manage-users-page .admin-user-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.admin-manage-users-page .admin-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* User Card Body */
+.admin-manage-users-page .admin-user-card-body {
+  border-top: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+  padding: 16px 0;
+}
+
+.admin-manage-users-page .admin-user-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-manage-users-page .admin-user-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6b7280;
+}
+
+.admin-manage-users-page .admin-user-meta-item svg {
+  flex-shrink: 0;
+}
+
+.admin-manage-users-page .admin-meta-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 2px;
+}
+
+.admin-manage-users-page .admin-meta-value {
+  display: block;
+  font-size: 0.9rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* User Card Footer */
+.admin-manage-users-page .admin-user-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.admin-manage-users-page .admin-user-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-manage-users-page .admin-user-details p {
+  margin: 0 0 4px 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-manage-users-page .admin-user-relative-date {
+  color: #9ca3af !important;
+  font-size: 0.8rem !important;
+}
+
+.admin-manage-users-page .admin-user-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.admin-manage-users-page .admin-delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-manage-users-page .admin-delete-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* No Users */
+.admin-manage-users-page .admin-no-users {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+/* Scroll Controls */
+.admin-manage-users-page .admin-scroll-controls {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 12px 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.admin-manage-users-page .admin-scroll-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.admin-manage-users-page .admin-scroll-btn:hover:not(.disabled) {
+  background: #5a67d8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.admin-manage-users-page .admin-scroll-btn.disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.admin-manage-users-page .admin-scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.admin-manage-users-page .admin-scroll-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  transition: background-color 0.3s ease;
+}
+
+.admin-manage-users-page .admin-scroll-dot.active {
+  background: #667eea;
+}
+
+/* Modal Styles */
+.admin-manage-users-page .admin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.admin-manage-users-page .admin-modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 100%;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-manage-users-page .admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  margin-bottom: 20px;
+}
+
+.admin-manage-users-page .admin-modal-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.admin-manage-users-page .admin-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-manage-users-page .admin-modal-close:hover {
+  background: #f3f4f6;
+}
+
+.admin-manage-users-page .admin-modal-content {
+  padding: 0 24px 24px;
+}
+
+.admin-manage-users-page .admin-modal-content p {
+  margin-bottom: 12px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.admin-manage-users-page .admin-warning {
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-manage-users-page .admin-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.admin-manage-users-page .admin-cancel-btn,
+.admin-manage-users-page .admin-confirm-delete-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-manage-users-page .admin-cancel-btn {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.admin-manage-users-page .admin-cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+.admin-manage-users-page .admin-confirm-delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.admin-manage-users-page .admin-confirm-delete-btn:hover {
+  background: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-manage-users-page .admin-controls {
+    flex-direction: column;
+  }
+
+  .admin-manage-users-page .admin-search-box,
+  .admin-manage-users-page .admin-filter-box {
+    min-width: 100%;
+  }
+
+  .admin-manage-users-page .admin-users-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .admin-manage-users-page .admin-user-card {
+    padding: 20px;
+  }
+
+  .admin-manage-users-page .admin-user-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .admin-manage-users-page .admin-user-actions {
+    justify-content: stretch;
+  }
+
+  .admin-manage-users-page .admin-delete-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .admin-manage-users-page .admin-scroll-controls {
+    right: 8px;
+    padding: 8px 6px;
+  }
+
+  .admin-manage-users-page .admin-scroll-btn {
+    width: 28px;
+    height: 28px;
+  }
+}

@@ -1,0 +1,374 @@
+/* Study Spot Review Page Scoped Styles - Professional Business Design */
+.study-spot-review-page {
+  /* Professional Business Color Palette - Scoped to Study Spot Review Only */
+  --review-bg-primary: #f8fafc;
+  --review-bg-secondary: #f1f5f9;
+  --review-bg-card: #ffffff;
+  --review-border-light: #e2e8f0;
+  --review-border-medium: #cbd5e1;
+  --review-text-primary: #1e293b;
+  --review-text-secondary: #64748b;
+  --review-text-muted: #94a3b8;
+  --review-accent-blue: #3b82f6;
+  --review-accent-purple: #8b5cf6;
+  --review-accent-yellow: #f59e0b;
+  --review-success: #059669;
+  --review-warning: #d97706;
+  --review-error: #dc2626;
+
+  /* Professional Shadows */
+  --review-shadow-subtle: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --review-shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --review-shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Full viewport layout - no white space */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--review-bg-primary);
+  gap: 16px;
+}
+
+.study-spot-review-page * {
+  box-sizing: border-box;
+}
+
+/* Header Section */
+.study-spot-review-page .review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.study-spot-review-page .back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--review-bg-card);
+  border: 1px solid var(--review-border-medium);
+  border-radius: 8px;
+  color: var(--review-text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.study-spot-review-page .back-button:hover {
+  background: var(--review-bg-secondary);
+  border-color: var(--review-accent-blue);
+  transform: translateX(-2px);
+}
+
+.study-spot-review-page .page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--review-text-primary);
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+/* Main Content Layout */
+.study-spot-review-page .content-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Review Form Section */
+.study-spot-review-page .form-section {
+  background: var(--review-bg-card);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--review-shadow-soft);
+  border: 1px solid var(--review-border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.study-spot-review-page .form-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--review-text-primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.study-spot-review-page .review-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid var(--review-border-medium);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--review-text-primary);
+  background: var(--review-bg-card);
+  resize: vertical;
+  transition: border-color 0.3s ease;
+  margin-bottom: 16px;
+}
+
+.study-spot-review-page .review-textarea:focus {
+  outline: none;
+  border-color: var(--review-accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.study-spot-review-page .review-textarea::placeholder {
+  color: var(--review-text-muted);
+}
+
+/* Star Rating */
+.study-spot-review-page .star-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.study-spot-review-page .star {
+  color: var(--review-border-medium);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.study-spot-review-page .star.filled {
+  color: var(--review-accent-yellow);
+}
+
+.study-spot-review-page .star:hover {
+  transform: scale(1.1);
+}
+
+.study-spot-review-page .rating-text {
+  font-size: 0.9rem;
+  color: var(--review-text-secondary);
+  font-weight: 500;
+}
+
+/* Submit Button */
+.study-spot-review-page .submit-btn {
+  padding: 12px 24px;
+  background: var(--review-accent-blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+}
+
+.study-spot-review-page .submit-btn:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: var(--review-shadow-soft);
+}
+
+.study-spot-review-page .submit-btn:disabled {
+  background: var(--review-text-muted);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Reviews List Section */
+.study-spot-review-page .reviews-section {
+  background: var(--review-bg-card);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--review-shadow-soft);
+  border: 1px solid var(--review-border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.study-spot-review-page .reviews-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--review-text-primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.study-spot-review-page .reviews-list {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+/* Review Card */
+.study-spot-review-page .review-card {
+  background: var(--review-bg-secondary);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--review-border-light);
+  transition: all 0.3s ease;
+}
+
+.study-spot-review-page .review-card.your-review {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: var(--review-accent-blue);
+}
+
+.study-spot-review-page .review-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--review-shadow-soft);
+}
+
+.study-spot-review-page .review-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.study-spot-review-page .reviewer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.study-spot-review-page .reviewer-name {
+  font-weight: 600;
+  color: var(--review-text-primary);
+  font-size: 0.9rem;
+}
+
+.study-spot-review-page .review-date {
+  font-size: 0.8rem;
+  color: var(--review-text-muted);
+}
+
+.study-spot-review-page .review-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.study-spot-review-page .review-text {
+  color: var(--review-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Loading and Error States */
+.study-spot-review-page .loading-container,
+.study-spot-review-page .error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.study-spot-review-page .loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--review-border-light);
+  border-top: 3px solid var(--review-accent-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.study-spot-review-page .loading-text {
+  color: var(--review-text-secondary);
+  font-size: 0.9rem;
+}
+
+.study-spot-review-page .error-message {
+  color: var(--review-error);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.study-spot-review-page .no-reviews {
+  color: var(--review-text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .study-spot-review-page .content-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .study-spot-review-page .reviews-section {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .study-spot-review-page {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .study-spot-review-page .review-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .study-spot-review-page .page-title {
+    text-align: left;
+    font-size: 1.25rem;
+  }
+
+  .study-spot-review-page .form-section,
+  .study-spot-review-page .reviews-section {
+    padding: 16px;
+  }
+
+  .study-spot-review-page .review-textarea {
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .study-spot-review-page {
+    padding: 8px;
+  }
+
+  .study-spot-review-page .form-section,
+  .study-spot-review-page .reviews-section {
+    padding: 12px;
+  }
+
+  .study-spot-review-page .submit-btn {
+    width: 100%;
+  }
+}

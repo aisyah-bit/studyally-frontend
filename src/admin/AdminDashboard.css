@@ -1,0 +1,545 @@
+/* Admin Dashboard Scoped Styles */
+.admin-dashboard-page {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.admin-dashboard-page * {
+  box-sizing: border-box;
+}
+
+/* Dashboard Header */
+.admin-dashboard-page .admin-dashboard-header {
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+.admin-dashboard-page .admin-dashboard-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-dashboard-page .admin-dashboard-header p {
+  color: #6b7280;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Loading State */
+.admin-dashboard-page .admin-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+}
+
+.admin-dashboard-page .admin-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.admin-dashboard-page .admin-loading p {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Analytics Section - Grid Layout Similar to Student Dashboard */
+.admin-dashboard-page .admin-analytics-section {
+  display: grid;
+  grid-template-areas:
+    "user-growth group-analytics"
+    "activity-trends engagement-metrics";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  height: calc(100vh - 112px);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Chart Card Base Styles */
+.admin-dashboard-page .admin-chart-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  min-height: 0;
+  max-height: 100%;
+  height: 100%;
+  position: relative;
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+.admin-dashboard-page .admin-chart-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 8px -2px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Grid Area Assignments */
+.admin-dashboard-page .admin-user-growth {
+  grid-area: user-growth;
+}
+
+.admin-dashboard-page .admin-group-analytics {
+  grid-area: group-analytics;
+}
+
+.admin-dashboard-page .admin-activity-trends {
+  grid-area: activity-trends;
+}
+
+.admin-dashboard-page .admin-engagement-metrics {
+  grid-area: engagement-metrics;
+}
+
+/* Stat Cards */
+.admin-dashboard-page .admin-stat-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-dashboard-page .admin-stat-card:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 8px -2px rgba(0, 0, 0, 0.08),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.admin-dashboard-page .admin-stat-card-large {
+  padding: 24px;
+  gap: 20px;
+}
+
+.admin-dashboard-page .admin-stat-card-small {
+  padding: 16px;
+  gap: 12px;
+}
+
+.admin-dashboard-page .admin-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  flex-shrink: 0;
+}
+
+.admin-dashboard-page .admin-stat-card-large .admin-stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
+
+.admin-dashboard-page .admin-stat-card-small .admin-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.admin-dashboard-page .admin-stat-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-dashboard-page .admin-stat-content h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-dashboard-page .admin-stat-card-large .admin-stat-content h3 {
+  font-size: 0.95rem;
+}
+
+.admin-dashboard-page .admin-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-dashboard-page .admin-stat-card-large .admin-stat-value {
+  font-size: 1.75rem;
+}
+
+.admin-dashboard-page .admin-stat-card-small .admin-stat-value {
+  font-size: 1.25rem;
+}
+
+/* Recent Activity Section */
+.admin-dashboard-page .admin-recent-activity {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.admin-dashboard-page .admin-recent-activity h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.admin-dashboard-page .admin-activity-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.admin-dashboard-page .admin-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.admin-dashboard-page .admin-activity-item:hover {
+  background: #f9fafb;
+}
+
+.admin-dashboard-page .admin-activity-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  flex-shrink: 0;
+}
+
+.admin-dashboard-page .admin-activity-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-dashboard-page .admin-activity-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 2px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-dashboard-page .admin-activity-meta {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-dashboard-page .admin-no-activity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* No Data State */
+.admin-dashboard-page .admin-no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 2px dashed #d1d5db;
+}
+
+.admin-dashboard-page .admin-no-data p {
+  color: #6b7280;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Chart Container Styles */
+.admin-dashboard-page .admin-chart-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.admin-dashboard-page .admin-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.admin-dashboard-page .admin-chart-title-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-dashboard-page .admin-chart-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(102, 126, 234, 0.1);
+  flex-shrink: 0;
+}
+
+.admin-dashboard-page .admin-chart-title-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+}
+
+.admin-dashboard-page .admin-chart-subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.admin-dashboard-page .admin-chart-stats {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.admin-dashboard-page .admin-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.admin-dashboard-page .admin-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.admin-dashboard-page .admin-stat-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.admin-dashboard-page .admin-chart-content {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* Engagement Metrics Specific Styles */
+.admin-dashboard-page .admin-engagement-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.admin-dashboard-page .admin-engagement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.admin-dashboard-page .admin-engagement-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  flex-shrink: 0;
+}
+
+.admin-dashboard-page .admin-engagement-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.admin-dashboard-page .admin-engagement-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.admin-dashboard-page .admin-engagement-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.admin-dashboard-page .admin-additional-metrics {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.admin-dashboard-page .admin-metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.admin-dashboard-page .admin-metric-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.admin-dashboard-page .admin-metric-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .admin-dashboard-page .admin-analytics-section {
+    grid-template-areas:
+      "user-growth"
+      "group-analytics"
+      "activity-trends"
+      "engagement-metrics";
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    height: auto;
+    max-height: none;
+  }
+
+  .admin-dashboard-page .admin-chart-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .admin-dashboard-page .admin-engagement-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard-page .admin-dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .admin-dashboard-page .admin-chart-card {
+    padding: 16px;
+  }
+
+  .admin-dashboard-page .admin-chart-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .admin-dashboard-page .admin-chart-stats {
+    flex-direction: row;
+    gap: 16px;
+    align-self: stretch;
+  }
+
+  .admin-dashboard-page .admin-additional-metrics {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

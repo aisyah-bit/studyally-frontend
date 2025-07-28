@@ -21,11 +21,13 @@ export default function LogIn() {
       return;
     }
 
-    if (!email.endsWith("@gmail.com")) {
-      setError("Only Gmail addresses are allowed.");
+   const isGmail = email.endsWith("@gmail.com");
+  const isUiTM = /^[0-9]{10}@student\.uitm\.edu\.my$/.test(email);
+
+    if (!isGmail && !isUiTM) {
+      setError("Only Gmail or UiTM student emails are allowed.");
       return;
     }
-
     try {
       await signOut(auth); // clear previous sessions
       const userCredential = await signInWithEmailAndPassword(auth, email, password);

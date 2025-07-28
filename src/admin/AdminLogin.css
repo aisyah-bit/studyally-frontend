@@ -1,0 +1,189 @@
+/* Admin Login Page Scoped Styles */
+.admin-login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1rem;
+  background: linear-gradient(135deg, #8e8dfa, #b87ee6);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.admin-login-page * {
+  box-sizing: border-box;
+}
+
+/* Main admin login container */
+.admin-login-page .admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Admin login box */
+.admin-login-page .admin-login-box {
+  width: 100%;
+  max-width: 480px;
+  padding: 3rem;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Admin lock icon */
+.admin-login-page .admin-lock-icon {
+  background: linear-gradient(135deg, #e7ddfa, #f3f0ff);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(108, 93, 211, 0.2);
+}
+
+/* Admin headings */
+.admin-login-page .admin-login-box h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.admin-login-page .admin-subtitle {
+  margin-bottom: 2.5rem;
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Admin form groups */
+.admin-login-page .admin-input-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.admin-login-page .admin-input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.admin-login-page .admin-input-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  color: #1f2937;
+}
+
+.admin-login-page .admin-input-group input:focus {
+  border-color: #6c5dd3;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(108, 93, 211, 0.1);
+  transform: translateY(-1px);
+}
+
+.admin-login-page .admin-input-group input:disabled {
+  background-color: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Admin submit button */
+.admin-login-page .admin-login-button {
+  background: linear-gradient(135deg, #6c5dd3, #8b5cf6);
+  color: #fff;
+  padding: 16px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(108, 93, 211, 0.3);
+}
+
+.admin-login-page .admin-login-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5b4ac9, #7c3aed);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(108, 93, 211, 0.4);
+}
+
+.admin-login-page .admin-login-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Admin error messages */
+.admin-login-page .admin-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+/* Admin footer links */
+.admin-login-page .admin-login-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.admin-login-page .admin-login-footer p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.admin-login-page .admin-login-footer a {
+  color: #6c5dd3;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.admin-login-page .admin-login-footer a:hover {
+  color: #5b4ac9;
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .admin-login-page {
+    padding: 1rem;
+  }
+  
+  .admin-login-page .admin-login-box {
+    padding: 2rem;
+  }
+  
+  .admin-login-page .admin-lock-icon {
+    width: 64px;
+    height: 64px;
+  }
+  
+  .admin-login-page .admin-login-box h2 {
+    font-size: 1.5rem;
+  }
+}

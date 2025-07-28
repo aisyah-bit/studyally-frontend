@@ -29,6 +29,14 @@ export default function SignUp() {
       return;
     }
 
+      const isGmail = email.endsWith("@gmail.com");
+      const isUiTM = /^(202[0-6])[0-9]{6}@student\.uitm\.edu\.my$/.test(email);
+
+    if (!isGmail && !isUiTM) {
+     setError("Only Gmail or UiTM student emails (2020–2026) are allowed.");
+      return;
+      
+    }
     try {
       const fullName = `${firstName} ${lastName}`;
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
