@@ -463,9 +463,13 @@ export default function SearchGroup() {
                       <MapPin size={16} />
                       <span>{group.location || "UiTM Shah Alam"}</span>
                     </div>
-                    <div className="detail-item match-score">
+                   <div className="detail-item match-score">
                       <Star size={16} />
-                      <span>{(group.hybrid_score ? (group.hybrid_score * 100).toFixed(0) : "70")}%</span>
+                      <span>
+                        {typeof group.compatibilityScore === 'number'
+                          ? `${group.compatibilityScore.toFixed(0)}%`
+                          : "N/A"}
+                      </span>
                     </div>
                     <div className="detail-item membership-status">
                       <Users size={16} />
