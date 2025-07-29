@@ -234,7 +234,11 @@ export default function SearchGroup() {
           const data = await response.json();
           // Include ALL groups from recommendations, regardless of status
           console.log(`Found ${data.length} groups from recommendations API`);
-          setMatchedGroups(data);
+          const groupsWithScore = data.map(group => ({
+            ...group,
+            hybrid_score: typeof group.hybrid_score === 'number' ? group.hybrid_score : null
+          }));
+          setMatchedGroups(groupsWithScore);
           return;
         }
       } catch (apiError) {
@@ -270,7 +274,8 @@ export default function SearchGroup() {
           id: doc.id,
           ...data,
           joinedList,
-          inviteList
+          inviteList,
+          hybrid_score: null
         };
       });
 
@@ -463,7 +468,7 @@ export default function SearchGroup() {
                       <MapPin size={16} />
                       <span>{group.location || "UiTM Shah Alam"}</span>
                     </div>
-                   <div className="detail-item match-score">
+                    <div className="detail-item match-score">
                       <Star size={16} />
                       <span>
                         {typeof group.compatibilityScore === 'number'
